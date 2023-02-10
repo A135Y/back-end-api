@@ -20,7 +20,7 @@ const ForgotPasswordPage = () => {
     return (
         <div className="create-account-container">
             <form onSubmit={handleSubmit}>
-                <h1>Forgot Password</h1>
+                <h1>Forgot Password?</h1>
                 <div className="form-group">
                     <label htmlFor="password">Username or Email:</label>
                     <input

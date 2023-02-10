@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./CreateAccountPage.css";
 
-const ForgotPasswordPage = () => {
+const NewPasswordPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -47,4 +47,4 @@ const ForgotPasswordPage = () => {
     );
 };
 
-export default ForgotPasswordPage;
+export default NewPasswordPage;
