@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./CreateAccountPage.css";
+import "./Page.css";
 
 const ForgotPasswordPage = () => {
     const [usernameOrEmail, setUsernameOrEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {

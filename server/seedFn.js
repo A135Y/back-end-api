@@ -4,6 +4,7 @@ const { User } = require('./');
 const seed = async () => {
     try {
         await sequelize.sync({ force: true }); // recreate db
+
     } catch (error) {
         console.error(error);
     }

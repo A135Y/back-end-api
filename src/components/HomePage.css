@@ -1,0 +1,80 @@
+.homepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px;
+}
+
+.homepage h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.homepage-intro {
+    width: 80%;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 50px;
+}
+
+.homepage-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+    margin-bottom: 50px;
+}
+
+.homepage-section h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.homepage-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.homepage-section img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+body {
+    background: linear-gradient(to right, #051937, #004d7a);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+    padding: 30px 0;
+}
+
+.dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    background: #0c2c54;
+}
+
+.footer a {
+    color: white;
+    margin: 0 5px;
+    font-weight: bold;
+    text-decoration: none;
+}
