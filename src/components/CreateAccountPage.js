@@ -30,16 +30,12 @@ const CreateAccountPage = () => {
                 body: JSON.stringify(data),
             });
 
-            const result = await response.json();
-            console.log(result);
-            navigate("/")
-
             if (!response.ok) {
-                console.log("error response: " + result.error)
+                const result = await response.json();
                 setErrorMessage(result.error);
-                navigate("/register")
+            } else {
+                navigate("/");
             }
-
         } catch (error) {
             console.error(error);
         }

@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from 'react';
-// require('dotenv').config();
 
 const GoogleSignIn = () => {
+    const [clientId, setClientId] = useState(null);
     const [user, setUser] = useState(null);
-    const { GOOGLE_CLIENT_ID, PROFILE_EMAIL } = process.env
-
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        window.gapi.load('auth2', () => {
-            window.gapi.auth2
-                .init({
-                    client_id: GOOGLE_CLIENT_ID,
-                    scope: PROFILE_EMAIL
-                })
-                .then(authInstance => {
-                    setUser(authInstance.currentUser.get());
+        fetch('/google-client-id')
+            .then(response => response.json())
+            .then(data => {
+                setClientId(data.client_id);
+                window.gapi.load('auth2', () => {
+                    window.gapi.auth2
+                        .init({
+                            client_id: clientId,
+                            scope: 'profile email'
+                        })
+                        .then(authInstance => {
+                            setUser(authInstance.currentUser.get());
+                        })
+                        .catch(error => {
+                            setError(error);
+                        });
                 });
-        });
+            });
     }, []);
 
 
     const onSuccess = (googleUser) => {
+        setUser(googleUser);
         console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
     };
 
     const onFailure = (error) => {
+        setError(error);
         console.log(error);
     };
 
     const handleSignIn = () => {
         const authInstance = window.gapi.auth2.getAuthInstance();
-        authInstance.signIn().then(() => {
-            setUser(authInstance.currentUser.get());
-        });
+        authInstance.signIn().then(onSuccess, onFailure);
     };
 
     const handleSignOut = () => {
@@ -41,25 +48,18 @@ const GoogleSignIn = () => {
             setUser(null);
         });
     };
-
     return (
         <div>
-            <div id="my-signin2"></div>
-            <script>
-                function renderButton() {
-                    window.gapi.signin2.render("my-signin2", {
-                        scope: "profile email",
-                        width: 240,
-                        height: 50,
-                        longtitle: true,
-                        theme: "dark",
-                        onsuccess: onSuccess,
-                        onfailure: onFailure
-                    })
-                }
-            </script>
-            <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-
+            <div>
+                {user ? (
+                    <div>
+                        Logged in as: {user.getBasicProfile().getName()}
+                        <button onClick={handleSignOut}>Sign Out</button>
+                    </div>
+                ) : (
+                    <div id="my-signin2"></div>
+                )}
+            </div>
         </div>
     );
 };

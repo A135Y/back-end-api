@@ -67,7 +67,6 @@ app.post('/register', async (req, res, next) => {
             return res.status(400).send({ error: 'Email  already in use' });
         }
 
-
         const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
         const newUser = await User.create({ username, firstname, surname, email, dateOfBirth, password: hashedPassword });
         console.log("Successfully created user " + newUser.username);
@@ -78,37 +77,40 @@ app.post('/register', async (req, res, next) => {
     }
 })
 
-app.post('/', async (req, res, next) => {
-    const { username, password } = req.body
-    const isEmail = username;
-    const changeToEmail = false;
-    for (let i = 0; i < isEmail.length; i++) {
-        if (isEmail[i] == "@") {
-            console.log(isEmail[i])
-            changeToEmail = true;
-        }
-    }
-
+app.post("/", async (req, res, next) => {
     try {
-        const user = await User.findOne({ where: { username: username } });
-        const isMatched = await bcrypt.compare(password, user.password)
+        const { usernameOrEmail, password } = req.body;
+        if (!usernameOrEmail) {
+            return res.status(400).send({ error: "Username or email is required" });
+        }
+
+        let user;
+        if (usernameOrEmail.includes("@")) {
+            user = await User.findOne({ where: { email: usernameOrEmail } });
+        } else {
+            user = await User.findOne({ where: { username: usernameOrEmail } });
+        }
+
+        if (!user) {
+            return res.status(401).send({ error: "Incorrect username or email" });
+        }
+
+        const isMatched = await bcrypt.compare(password, user.password);
 
         if (isMatched) {
-
-            res.send({ message: "success You're logged in " + user.username })
+            // create a JSON Web Token (JWT) with the user information
+            const token = jwt.sign({ userId: user.id }, JWT_SECRET);
+            console.log(token)
+            // send the JWT back to the client
+            return res.send({ token, message: `Success! You're logged in as ${user.username}` });//add token before message when set up
+        } else {
+            return res.status(401).send({ error: "Incorrect password" });
         }
-        else {
-            res.sendStatus(401);
-        }
-
+    } catch (error) {
+        console.error(error);
+        next(error);
     }
-    catch (e) {
-        console.log(e)
-        next(e)
-    }
-})
-
-
+});
 
 app.use((error, req, res, next) => {
     console.error('SERVER ERROR: ', error);
