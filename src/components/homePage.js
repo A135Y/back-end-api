@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './HomePage.css';
 
-export default function Homepage() {
+const Homepage = () => {
 
     return (
         <div className="homepage">
@@ -57,3 +57,5 @@ export default function Homepage() {
         </div>
     );
 }
+
+export default Homepage;
