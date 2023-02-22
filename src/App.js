@@ -5,6 +5,8 @@ import CreateAccountPage from "./components/CreateAccountPage";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";
 import NewPasswordPage from "./components/NewPasswordPage";
 import HomePage from "./components/HomePage";
+import ProfilePage from "./components/ProfilePage";
+
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
       <Route path='/register' element={<CreateAccountPage />} />
       <Route path='/forgot-password' element={<ForgotPasswordPage />} />
       <Route path='/enter-new-password' element={<NewPasswordPage />} />
+      <Route path='/profile-page' element={<ProfilePage />} />
     </Routes>
   );
 }

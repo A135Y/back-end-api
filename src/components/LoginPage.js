@@ -34,6 +34,8 @@ const LoginPage = () => {
         const result = await response.json();
         setErrorMessage(result.error);
       } else {
+        const { token } = await response.json();
+        localStorage.setItem("token", token);
         navigate("/home");
       }
     } catch (error) {

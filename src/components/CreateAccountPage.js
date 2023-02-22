@@ -10,6 +10,7 @@ const CreateAccountPage = () => {
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [avatar, setAvatar] = useState(null);
 
     const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const CreateAccountPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         // create a data object with the form inputs
-        const data = { username, firstname, surname, dateOfBirth, password, email };
+        const data = { username, firstname, surname, dateOfBirth, password, email, avatar };
 
         // send the data to the server
         try {
@@ -101,6 +102,17 @@ const CreateAccountPage = () => {
                         id="password"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="avatar">Avatar:</label>
+                    <input
+                        type="file"
+                        id="avatar"
+                        onChange={(event) => {
+                            const file = event.target.files[0];
+                            setAvatar(URL.createObjectURL(file));
+                        }}
                     />
                 </div>
                 <button type="submit" >Create Account</button>
